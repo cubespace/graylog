@@ -51,6 +51,7 @@ function install_opensearch {
     sudo systemctl daemon-reload
     sudo systemctl enable opensearch.service
     sudo systemctl start opensearch.service
+    sudo systemctl restart opensearch.service
 }
 
 # Hàm cài đặt Graylog
