@@ -66,8 +66,8 @@ function install_graylog {
     #sed -i "s|#elasticsearch_hosts *=.*|elasticsearch_hosts = http://127.0.0.1:9200|" $config_file
     sudo sed -i 's/#http_bind_address = 127.0.0.1.*/http_bind_address = 0.0.0.0:9000/g' $config_file
     sed -i "s|#http_publish_uri = http://192.168.1.1:9000/|http_publish_uri = http://$IP:9000/|" $config_file
-	sed -i 's/#message_journal_max_size = 5gb/message_journal_max_size = 2gb/' $config_file
-    sed -i 's/#root_timezone = UTC/root_timezone = Asia/Ho_Chi_Minh/' $config_file
+	#sed -i 's/#message_journal_max_size = 5gb/message_journal_max_size = 2gb/' $config_file
+    sed -i 's/#root_timezone = UTC/root_timezone = Asia\/Ho_Chi_Minh/' $config_file
     sudo systemctl daemon-reload
     sudo systemctl enable graylog-server.service
     sudo systemctl start graylog-server.service
