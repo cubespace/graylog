@@ -1,0 +1,274 @@
+{
+    "extractors": [
+      {
+        "title": "vm_off",
+        "extractor_type": "grok",
+        "converters": [],
+        "order": 0,
+        "cursor_strategy": "copy",
+        "source_field": "message",
+        "target_field": "",
+        "extractor_config": {
+          "grok_pattern": "Event \\[%{NUMBER}\\] %{DATA} \\[%{TIMESTAMP_ISO8601:time}\\] \\[vim.event.VmPoweredOffEvent] \\[%{LOGLEVEL}\\] %{GREEDYDATA} \\[%{DATA:name_VM} on  %{DATA:host} in %{DATA:cluster} is %{GREEDYDATA:state}\\]",
+          "named_captures_only": true
+        },
+        "condition_type": "none",
+        "condition_value": ""
+      },
+      {
+        "title": "vm_on",
+        "extractor_type": "grok",
+        "converters": [],
+        "order": 0,
+        "cursor_strategy": "copy",
+        "source_field": "message",
+        "target_field": "",
+        "extractor_config": {
+          "grok_pattern": "Event \\[%{NUMBER}\\] %{DATA} \\[%{TIMESTAMP_ISO8601:time}\\] \\[vim.event.VmPoweredOnEvent] \\[%{LOGLEVEL:lever}\\] \\[%{DATA:user}\\]%{GREEDYDATA}\\[%{DATA:name_VM} on %{DATA:host} in %{DATA:datastore} has %{GREEDYDATA:state}]",
+          "named_captures_only": true
+        },
+        "condition_type": "none",
+        "condition_value": ""
+      },
+      {
+        "title": "reconfig-vm",
+        "extractor_type": "grok",
+        "converters": [],
+        "order": 0,
+        "cursor_strategy": "copy",
+        "source_field": "message",
+        "target_field": "",
+        "extractor_config": {
+          "grok_pattern": "Event \\[%{NUMBER}] \\[%{DATA}\\] \\[%{TIMESTAMP_ISO8601:time}] \\[vim.event.VmReconfiguredEvent] \\[%{LOGLEVEL}] \\[%{DATA:user}] %{GREEDYDATA}\\[%{DATA:state} %{DATA:name_VM} on %{DATA:host} in %{DATA:datacenter}\\. (?s)%{GREEDYDATA:content}\\]",
+          "named_captures_only": true
+        },
+        "condition_type": "none",
+        "condition_value": ""
+      },
+      {
+        "title": "delete-user",
+        "extractor_type": "grok",
+        "converters": [],
+        "order": 0,
+        "cursor_strategy": "copy",
+        "source_field": "message",
+        "target_field": "",
+        "extractor_config": {
+          "grok_pattern": "%{TIMESTAMP_ISO8601:time} %{LOGLEVEL:lever} ssoAdminServer\\[%{GREEDYDATA}\\[User \\{Name\\: %{DATA:user}\\, Domain\\: %{DATA:domain}\\} with role \\'%{USERNAME:role}\\'] %{DATA:action}\\'%{USERNAME:user_action}'",
+          "named_captures_only": true
+        },
+        "condition_type": "none",
+        "condition_value": ""
+      },
+      {
+        "title": "user-update",
+        "extractor_type": "grok",
+        "converters": [],
+        "order": 0,
+        "cursor_strategy": "copy",
+        "source_field": "message",
+        "target_field": "",
+        "extractor_config": {
+          "grok_pattern": "%{TIMESTAMP_ISO8601:time} %{LOGLEVEL:lever} ssoAdminServer\\[%{GREEDYDATA}\\[User \\{Name\\: %{DATA:user_action}\\, Domain\\: %{DATA:domain}\\} with role \\'%{USERNAME:role}\\'] %{DATA:action}\\'%{USERNAME:user_updated}' details %{GREEDYDATA:details}",
+          "named_captures_only": true
+        },
+        "condition_type": "none",
+        "condition_value": ""
+      },
+      {
+        "title": "add_user",
+        "extractor_type": "grok",
+        "converters": [],
+        "order": 0,
+        "cursor_strategy": "copy",
+        "source_field": "message",
+        "target_field": "",
+        "extractor_config": {
+          "grok_pattern": "%{TIMESTAMP_ISO8601:time} %{LOGLEVEL:lever} ssoAdminServer\\[%{GREEDYDATA}\\[User \\{Name: %{DATA:user_action}, Domain: %{DATA:domain}\\} with role \\'%{DATA:role}\\'] %{GREEDYDATA:action} '%{DATA:user_created}\\' with details %{GREEDYDATA:details}",
+          "named_captures_only": true
+        },
+        "condition_type": "none",
+        "condition_value": ""
+      },
+      {
+        "title": "Global_permission_add",
+        "extractor_type": "grok",
+        "converters": [],
+        "order": 0,
+        "cursor_strategy": "copy",
+        "source_field": "message",
+        "target_field": "",
+        "extractor_config": {
+          "grok_pattern": "Event \\[%{DATA}\\] \\[%{DATA}\\] \\[%{TIMESTAMP_ISO8601:time}\\] \\[vim.event.EventEx\\] \\[%{LOGLEVEL:lever}\\] \\[%{DATA:user_action}\\] \\[] \\[%{BASE10NUM}] \\[%{DATA:action} for user %{DATA:user_added} with role %{DATA:role} and propagation True\\.]",
+          "named_captures_only": true
+        },
+        "condition_type": "none",
+        "condition_value": ""
+      },
+      {
+        "title": "remove_role",
+        "extractor_type": "grok",
+        "converters": [],
+        "order": 0,
+        "cursor_strategy": "copy",
+        "source_field": "message",
+        "target_field": "",
+        "extractor_config": {
+          "grok_pattern": "Event \\[%{NUMBER}\\] \\[%{DATA}\\] \\[%{TIMESTAMP_ISO8601:time}\\] \\[vim.event.RoleRemovedEvent] \\[%{LOGLEVEL:lever}\\] \\[%{DATA:user_action}\\] \\[] \\[%{NUMBER}\\] \\[Role %{DATA:role_action} %{DATA:action}\\]",
+          "named_captures_only": true
+        },
+        "condition_type": "none",
+        "condition_value": ""
+      },
+      {
+        "title": "remove_global_permission",
+        "extractor_type": "grok",
+        "converters": [],
+        "order": 0,
+        "cursor_strategy": "copy",
+        "source_field": "message",
+        "target_field": "",
+        "extractor_config": {
+          "grok_pattern": "Event \\[%{NUMBER}\\] %{DATA}\\] \\[%{TIMESTAMP_ISO8601:time}\\] \\[vim.event.EventEx] \\[%{LOGLEVEL:lever}\\] \\[%{DATA:user_action}\\] \\[] \\[%{DATA}\\] \\[%{DATA:action} for user %{DATA:user_permission}\\.]",
+          "named_captures_only": true
+        },
+        "condition_type": "none",
+        "condition_value": ""
+      },
+      {
+        "title": "add_role",
+        "extractor_type": "grok",
+        "converters": [],
+        "order": 0,
+        "cursor_strategy": "copy",
+        "source_field": "message",
+        "target_field": "",
+        "extractor_config": {
+          "grok_pattern": "Event \\[%{NUMBER}] \\[%{DATA}\\] \\[%{TIMESTAMP_ISO8601:time}\\] \\[vim.event.RoleAddedEvent] \\[%{LOGLEVEL:lever}\\] \\[%{DATA:user_action}\\] \\[] %{DATA}\\] \\[New role %{DATA:new_role} %{DATA:action_role}\\]",
+          "named_captures_only": true
+        },
+        "condition_type": "none",
+        "condition_value": ""
+      },
+      {
+        "title": "deploy-vm-template",
+        "extractor_type": "grok",
+        "converters": [],
+        "order": 0,
+        "cursor_strategy": "copy",
+        "source_field": "message",
+        "target_field": "",
+        "extractor_config": {
+          "grok_pattern": "Event \\[%{NUMBER}\\] \\[1-1] \\[%{TIMESTAMP_ISO8601:time}\\] \\[vim.event.VmBeingDeployedEvent] \\[%{LOGLEVEL:lever}\\] \\[%{DATA:user_action}\\] %{GREEDYDATA}\\[%{DATA:action} %{DATA} on host %{DATA:host} in %{DATA:DC} from template %{DATA:template}\\]",
+          "named_captures_only": true
+        },
+        "condition_type": "none",
+        "condition_value": ""
+      },
+      {
+        "title": "delete-VM",
+        "extractor_type": "grok",
+        "converters": [],
+        "order": 0,
+        "cursor_strategy": "copy",
+        "source_field": "message",
+        "target_field": "",
+        "extractor_config": {
+          "grok_pattern": "Event \\[%{DATA}\\] \\[1-1] \\[%{TIMESTAMP_ISO8601:time}\\] \\[vim.event.VmRemovedEvent] \\[%{LOGLEVEL:lever}\\] \\[%{DATA:user_action}\\] %{GREEDYDATA}\\[%{DATA:action} %{DATA:name_VM} on %{DATA:host} from %{DATA:DC}\\]",
+          "named_captures_only": true
+        },
+        "condition_type": "none",
+        "condition_value": ""
+      },
+      {
+        "title": "vcenter-login-logout",
+        "extractor_type": "grok",
+        "converters": [],
+        "order": 0,
+        "cursor_strategy": "copy",
+        "source_field": "message",
+        "target_field": "",
+        "extractor_config": {
+          "grok_pattern": "Event \\[%{NUMBER}\\] \\[1-1] \\[%{TIMESTAMP_ISO8601:time}\\] \\[vim.event.EventEx] \\[%{LOGLEVEL:lever}] \\[%{DATA:user_login}] \\[] \\[%{NUMBER}] \\[%{GREEDYDATA:action} %{DATA} from %{IPV4:ip} at %{MONTHNUM}/%{MONTHDAY}/%{YEAR} %{HOUR}:%{MINUTE}:%{SECOND} %{WORD} in SSO",
+          "named_captures_only": true
+        },
+        "condition_type": "none",
+        "condition_value": ""
+      },
+      {
+        "title": "create-user",
+        "extractor_type": "grok",
+        "converters": [],
+        "order": 0,
+        "cursor_strategy": "copy",
+        "source_field": "message",
+        "target_field": "",
+        "extractor_config": {
+          "grok_pattern": "%{TIMESTAMP_ISO8601:time} %{LOGLEVEL:lever} ssoAdminServer\\[%{DATA}\\] \\[%{DATA}\\] \\[auditlogger] \\{\\\\\"user\\\\\":\\\\\"%{DATA:user_action}\\\\\",\\\\\"%{DATA}\\\\\":\\\\\"\\\\\",\\\\\"timestamp\\\\\":\\\\\"%{MONTHNUM}/%{MONTHDAY}/%{YEAR} %{TIME} %{WORD}\\\\\",\\\\\"description\\\\\":\\\\\"%{DATA:action} \\'%{USERNAME:user_add}\\' with details \\(%{GREEDYDATA:detail}\\)%{GREEDYDATA}",
+          "named_captures_only": true
+        },
+        "condition_type": "none",
+        "condition_value": ""
+      },
+      {
+        "title": "ssh-vcenter-disconnect",
+        "extractor_type": "grok",
+        "converters": [],
+        "order": 0,
+        "cursor_strategy": "copy",
+        "source_field": "message",
+        "target_field": "",
+        "extractor_config": {
+          "grok_pattern": "%{WORD:action} from user %{WORD:user} %{IPV4:ip} port %{NUMBER:port}",
+          "named_captures_only": true
+        },
+        "condition_type": "none",
+        "condition_value": ""
+      },
+      {
+        "title": "vami_login",
+        "extractor_type": "grok",
+        "converters": [],
+        "order": 0,
+        "cursor_strategy": "copy",
+        "source_field": "message",
+        "target_field": "",
+        "extractor_config": {
+          "grok_pattern": "%{TIMESTAMP_ISO8601:time}: %{LOGLEVEL:lever} Session Authentication request for user : %{DATA:user}. Status : %{WORD:action_vami}",
+          "named_captures_only": true
+        },
+        "condition_type": "none",
+        "condition_value": ""
+      },
+      {
+        "title": "vami_logout",
+        "extractor_type": "grok",
+        "converters": [],
+        "order": 0,
+        "cursor_strategy": "copy",
+        "source_field": "message",
+        "target_field": "",
+        "extractor_config": {
+          "grok_pattern": "%{TIMESTAMP_ISO8601:time} %{LOGLEVEL:lever} Operation:status %{DATA} %{DATA:user} %{GREEDYDATA:action_vami}"
+        },
+        "condition_type": "none",
+        "condition_value": ""
+      },
+      {
+        "title": "ssh-vcenter-success",
+        "extractor_type": "grok",
+        "converters": [],
+        "order": 0,
+        "cursor_strategy": "copy",
+        "source_field": "message",
+        "target_field": "",
+        "extractor_config": {
+          "grok_pattern": "%{GREEDYDATA:action} for %{WORD:user} from %{IPV4:ip} port %{NUMBER:port} ssh2",
+          "named_captures_only": false
+        },
+        "condition_type": "none",
+        "condition_value": ""
+      }
+    ],
+    "version": "5.2.8"
+  }
