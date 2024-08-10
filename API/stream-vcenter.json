@@ -1,0 +1,176 @@
+{
+    "streams": [
+      {
+        "creator_user_id": "admin",
+        "outputs": [],
+        "matching_type": "OR",
+        "description": "",
+        "created_at": "2024-08-02T17:31:10.694Z",
+        "disabled": false,
+        "rules": [
+          {
+            "field": "action",
+            "description": "",
+            "type": 1,
+            "inverted": false,
+            "value": "Successful login"
+          },
+          {
+            "field": "action",
+            "description": "",
+            "type": 1,
+            "inverted": false,
+            "value": "Logout event by"
+          },
+          {
+            "field": "action",
+            "description": "",
+            "type": 1,
+            "inverted": false,
+            "value": "Accepted password"
+          },
+          {
+            "field": "action",
+            "description": "",
+            "type": 1,
+            "inverted": false,
+            "value": "Disconnected"
+          },
+          {
+            "field": "action_vami",
+            "description": "",
+            "type": 1,
+            "inverted": false,
+            "value": "Success"
+          },
+          {
+            "field": "action_vami",
+            "description": "",
+            "type": 1,
+            "inverted": false,
+            "value": "Exiting with exit-code 0"
+          }
+        ],
+        "title": "vcenter-authencation",
+        "content_pack": null,
+        "remove_matches_from_default_stream": true,
+        "is_editable": true,
+        "is_default": false
+      },
+      {
+        "creator_user_id": "admin",
+        "outputs": [],
+        "matching_type": "OR",
+        "description": "",
+        "created_at": "2024-08-02T17:31:36.859Z",
+        "disabled": false,
+        "rules": [
+          {
+            "field": "action",
+            "description": "",
+            "type": 1,
+            "inverted": false,
+            "value": "Deleting principal"
+          },
+          {
+            "field": "action",
+            "description": "",
+            "type": 1,
+            "inverted": false,
+            "value": "Updating local person user"
+          },
+          {
+            "field": "action",
+            "description": "",
+            "type": 1,
+            "inverted": false,
+            "value": "Creating local person user"
+          },
+          {
+            "field": "action",
+            "description": "",
+            "type": 1,
+            "inverted": false,
+            "value": "Global Permission created"
+          },
+          {
+            "field": "action",
+            "description": "",
+            "type": 1,
+            "inverted": false,
+            "value": "Global Permission removed"
+          },
+          {
+            "field": "action_role",
+            "description": "",
+            "type": 1,
+            "inverted": false,
+            "value": "created"
+          },
+          {
+            "field": "action_role",
+            "description": "",
+            "type": 1,
+            "inverted": false,
+            "value": "removed"
+          }
+        ],
+        "title": "vcenter-permission",
+        "content_pack": null,
+        "remove_matches_from_default_stream": true,
+        "is_editable": true,
+        "is_default": false
+      },
+      {
+        "creator_user_id": "admin",
+        "outputs": [],
+        "matching_type": "OR",
+        "description": "",
+        "created_at": "2024-08-02T17:32:04.066Z",
+        "disabled": false,
+        "rules": [
+          {
+            "field": "state",
+            "description": "",
+            "type": 1,
+            "inverted": false,
+            "value": "powered on"
+          },
+          {
+            "field": "state",
+            "description": "",
+            "type": 1,
+            "inverted": false,
+            "value": "powered off"
+          },
+          {
+            "field": "state",
+            "description": "",
+            "type": 1,
+            "inverted": false,
+            "value": "Reconfigured"
+          },
+          {
+            "field": "action",
+            "description": "",
+            "type": 1,
+            "inverted": false,
+            "value": "Removed"
+          },
+          {
+            "field": "action",
+            "description": "",
+            "type": 1,
+            "inverted": false,
+            "value": "Deploying"
+          }
+        ],
+        "title": "vcenter-config-vm",
+        "content_pack": null,
+        "remove_matches_from_default_stream": true,
+        "is_editable": true,
+        "is_default": false
+      }
+    ]
+  }
+  

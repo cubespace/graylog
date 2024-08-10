@@ -1,0 +1,89 @@
+{
+    "index_sets": [
+      {
+        "title": "vcenter-authentication",
+        "description": "Authentication logs for vCenter",
+        "index_prefix": "vcenter_auth",
+        "shards": 1,
+        "replicas": 0,
+        "index_analyzer": "standard",
+        "rotation_strategy_class": "org.graylog2.indexer.rotation.strategies.TimeBasedRotationStrategy",
+        "rotation_strategy": {
+          "type": "org.graylog2.indexer.rotation.strategies.TimeBasedRotationStrategyConfig",
+          "rotation_period": "P1D"
+        },
+        "retention_strategy_class": "org.graylog2.indexer.retention.strategies.DeletionRetentionStrategy",
+        "retention_strategy": {
+          "type": "org.graylog2.indexer.retention.strategies.DeletionRetentionStrategyConfig",
+          "max_number_of_indices": 20
+        },
+        "index_optimization_max_num_segments": 1,
+        "index_optimization_disabled": true,
+        "field_type_refresh_interval": "PT5S",
+        "data_tiering": {
+          "type": "hot_only",
+          "index_lifetime_min": "P30D",
+          "index_lifetime_max": "P40D"
+        },
+        "use_legacy_rotation": false,
+        "writable": true
+      },
+      {
+        "title": "vcenter-reconfig-vm",
+        "description": "VM reconfiguration logs for vCenter",
+        "index_prefix": "vcenter_vm_reconfig",
+        "shards": 1,
+        "replicas": 0,
+        "index_analyzer": "standard",
+        "rotation_strategy_class": "org.graylog2.indexer.rotation.strategies.TimeBasedRotationStrategy",
+        "rotation_strategy": {
+          "type": "org.graylog2.indexer.rotation.strategies.TimeBasedRotationStrategyConfig",
+          "rotation_period": "P1D"
+        },
+        "retention_strategy_class": "org.graylog2.indexer.retention.strategies.DeletionRetentionStrategy",
+        "retention_strategy": {
+          "type": "org.graylog2.indexer.retention.strategies.DeletionRetentionStrategyConfig",
+          "max_number_of_indices": 20
+        },
+        "index_optimization_max_num_segments": 1,
+        "index_optimization_disabled": true,
+        "field_type_refresh_interval": "PT5S",
+        "data_tiering": {
+          "type": "hot_only",
+          "index_lifetime_min": "P30D",
+          "index_lifetime_max": "P40D"
+        },
+        "use_legacy_rotation": false,
+        "writable": true
+      },
+      {
+        "title": "vcenter-global-permission",
+        "description": "Global permission logs for vCenter",
+        "index_prefix": "vcenter_global_perm",
+        "shards": 1,
+        "replicas": 0,
+        "index_analyzer": "standard",
+        "rotation_strategy_class": "org.graylog2.indexer.rotation.strategies.TimeBasedRotationStrategy",
+        "rotation_strategy": {
+          "type": "org.graylog2.indexer.rotation.strategies.TimeBasedRotationStrategyConfig",
+          "rotation_period": "P1D"
+        },
+        "retention_strategy_class": "org.graylog2.indexer.retention.strategies.DeletionRetentionStrategy",
+        "retention_strategy": {
+          "type": "org.graylog2.indexer.retention.strategies.DeletionRetentionStrategyConfig",
+          "max_number_of_indices": 20
+        },
+        "index_optimization_max_num_segments": 1,
+        "index_optimization_disabled": true,
+        "field_type_refresh_interval": "PT5S",
+        "data_tiering": {
+          "type": "hot_only",
+          "index_lifetime_min": "P30D",
+          "index_lifetime_max": "P40D"
+        },
+        "use_legacy_rotation": false,
+        "writable": true
+      }
+    ]
+  }
+  
