@@ -1,11 +1,9 @@
 {
     "streams": [
-      {
-        "creator_user_id": "admin",
-        "outputs": [],
+      {  
         "matching_type": "OR",
         "description": "",
-        "created_at": "2024-08-02T17:31:10.694Z",
+        "index_set_id": "",
         "disabled": false,
         "rules": [
           {
@@ -57,12 +55,10 @@
         "is_editable": true,
         "is_default": false
       },
-      {
-        "creator_user_id": "admin",
-        "outputs": [],
+      { 
         "matching_type": "OR",
         "description": "",
-        "created_at": "2024-08-02T17:31:36.859Z",
+        "index_set_id": "",
         "disabled": false,
         "rules": [
           {
@@ -121,12 +117,10 @@
         "is_editable": true,
         "is_default": false
       },
-      {
-        "creator_user_id": "admin",
-        "outputs": [],
+      { 
         "matching_type": "OR",
         "description": "",
-        "created_at": "2024-08-02T17:32:04.066Z",
+        "index_set_id": "",
         "disabled": false,
         "rules": [
           {
