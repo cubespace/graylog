@@ -31,7 +31,7 @@
         "condition_value": ""
       },
       {
-        "title": "reconfig-vm",
+        "title": "reconfig_vm",
         "extractor_type": "grok",
         "converters": [],
         "order": 0,
@@ -46,7 +46,7 @@
         "condition_value": ""
       },
       {
-        "title": "delete-user",
+        "title": "delete_user",
         "extractor_type": "grok",
         "converters": [],
         "order": 0,
@@ -61,7 +61,7 @@
         "condition_value": ""
       },
       {
-        "title": "user-update",
+        "title": "user_update",
         "extractor_type": "grok",
         "converters": [],
         "order": 0,
@@ -151,7 +151,7 @@
         "condition_value": ""
       },
       {
-        "title": "deploy-vm-template",
+        "title": "deploy_vm_template",
         "extractor_type": "grok",
         "converters": [],
         "order": 0,
@@ -166,7 +166,7 @@
         "condition_value": ""
       },
       {
-        "title": "delete-VM",
+        "title": "delete_VM",
         "extractor_type": "grok",
         "converters": [],
         "order": 0,
@@ -181,7 +181,7 @@
         "condition_value": ""
       },
       {
-        "title": "vcenter-login-logout",
+        "title": "vcenter_login_logout",
         "extractor_type": "grok",
         "converters": [],
         "order": 0,
@@ -196,7 +196,7 @@
         "condition_value": ""
       },
       {
-        "title": "create-user",
+        "title": "create_user",
         "extractor_type": "grok",
         "converters": [],
         "order": 0,
@@ -211,7 +211,7 @@
         "condition_value": ""
       },
       {
-        "title": "ssh-vcenter-disconnect",
+        "title": "ssh_vcenter_disconnect",
         "extractor_type": "grok",
         "converters": [],
         "order": 0,
@@ -255,7 +255,7 @@
         "condition_value": ""
       },
       {
-        "title": "ssh-vcenter-success",
+        "title": "ssh_vcenter_success",
         "extractor_type": "grok",
         "converters": [],
         "order": 0,
