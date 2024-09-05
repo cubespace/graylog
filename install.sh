@@ -7,7 +7,7 @@ read -s -p "Enter password opensearch (not use @): " password_opensearch
 echo
 read -s -p "Enter password graylog: " password_graylog
 echo
-IP=$(hostname -I | awk '{print $1}')
+#IP=$(hostname -I | awk '{print $1}')
 # Tạo mật khẩu secret
 password_secret=$(</dev/urandom tr -dc A-Z-a-z-0-9 | head -c${1:-96};echo)
 # Tạo hash SHA-256 từ mật khẩu người dùng đã nhập
@@ -88,7 +88,7 @@ keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
 subjectAltName = @alt_names
 [alt_names]
 DNS.1 = $hostname
-IP.1 = $IP
+#IP.1 = $IP
 EOF
     openssl x509 -req -in localhost.csr -CA CA.pem -CAkey CA.key -CAcreateserial -days 365 -sha256 -extfile localhost.ext -out localhost.crt
     mkdir /etc/nginx/ssl-certificate
