@@ -1,13 +1,9 @@
 #!/bin/bash
 
 # Nhập hostname và password từ người dùng
-read -p "Enter DNS name: " hostname
-echo 
-read -s -p "Enter password opensearch (not use @): " password_opensearch
-echo
 read -s -p "Enter password graylog: " password_graylog
 echo
-#IP=$(hostname -I | awk '{print $1}')
+IP=$(hostname -I | awk '{print $1}')
 # Tạo mật khẩu secret
 password_secret=$(</dev/urandom tr -dc A-Z-a-z-0-9 | head -c${1:-96};echo)
 # Tạo hash SHA-256 từ mật khẩu người dùng đã nhập
@@ -23,9 +19,8 @@ sudo apt install openjdk-17-jre-headless -y
 
 # Hàm cài đặt MongoDB
 function install_mongod {
-    sudo apt-get install gnupg curl -y
-    curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor
-    echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+    curl -fsSL https://pgp.mongodb.com/server-6.0.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/mongodb-server-6.0.gpg
+    echo "deb [ arch=amd64,arm64 signed=/etc/apt/trusted.gpg.d/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
     sudo apt-get update
     sudo apt-get install -y mongodb-org
     sudo systemctl daemon-reload
@@ -35,11 +30,10 @@ function install_mongod {
 }
 
 function install_opensearch {
-    sudo apt-get update && sudo apt-get -y install lsb-release ca-certificates curl gnupg2
     curl -o- https://artifacts.opensearch.org/publickeys/opensearch.pgp | sudo gpg --dearmor --batch --yes -o /usr/share/keyrings/opensearch-keyring
     echo "deb [signed-by=/usr/share/keyrings/opensearch-keyring] https://artifacts.opensearch.org/releases/bundle/opensearch/2.x/apt stable main" | sudo tee /etc/apt/sources.list.d/opensearch-2.x.list
     sudo apt-get update
-    sudo env OPENSEARCH_INITIAL_ADMIN_PASSWORD="$password_opensearch" apt-get install opensearch=2.15.0
+    sudo OPENSEARCH_INITIAL_ADMIN_PASSWORD="Minhlaquang99" apt-get install opensearch=2.15.0
     echo "cluster.name: graylog" >> /etc/opensearch/opensearch.yml
     echo "node.name: ${hostname}" >> /etc/opensearch/opensearch.yml
     echo "discovery.type: single-node" >> /etc/opensearch/opensearch.yml
@@ -51,7 +45,6 @@ function install_opensearch {
     sudo systemctl daemon-reload
     sudo systemctl enable opensearch.service
     sudo systemctl start opensearch.service
-    sudo systemctl restart opensearch.service
 }
 
 # Hàm cài đặt Graylog
@@ -77,48 +70,19 @@ function install_graylog {
 # Hàm cài đặt Nginx
 function install_nginx {
     apt install nginx -y
-    openssl genrsa -out CA.key 2048
-    openssl req -x509 -sha256 -new -nodes -days 3650 -key CA.key -out CA.pem
-    openssl genrsa -out localhost.key 2048
-    openssl req -new -key localhost.key -out localhost.csr
-    sudo tee localhost.ext > /dev/null <<EOF
-authorityKeyIdentifier = keyid,issuer
-basicConstraints = CA:FALSE
-keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
-subjectAltName = @alt_names
-[alt_names]
-DNS.1 = $hostname
-#IP.1 = $IP
-EOF
-    openssl x509 -req -in localhost.csr -CA CA.pem -CAkey CA.key -CAcreateserial -days 365 -sha256 -extfile localhost.ext -out localhost.crt
-    mkdir /etc/nginx/ssl-certificate
-    mv localhost.crt localhost.key /etc/nginx/ssl-certificate
     sudo tee /etc/nginx/sites-available/graylog.conf > /dev/null <<EOF
 server {
         listen 80;
         listen [::]:80;
-        server_name $hostname;
-        return 301 https://\$host\$request_uri;
-}
-
-server {
-        listen 443 ssl;
-        listen [::]:443 ssl;
-        server_name $hostname;
+        server_name $IP;
         # root /var/www/html;
         index index.html index.htm index.nginx-debian.html;
-        # SSL Configuration
-        ssl_certificate     /etc/nginx/ssl-certificate/localhost.crt;
-        ssl_certificate_key /etc/nginx/ssl-certificate/localhost.key;
-        # Logs Locations
-        access_log  /var/log/nginx/graylog_access.log;
-        error_log  /var/log/nginx/graylog_error.log;
         location / {
                     proxy_set_header Host \$http_host;
                     proxy_set_header X-Forwarded-Host \$host;
                     proxy_set_header X-Forwarded-Server \$host;
                     proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-                    proxy_set_header X-Graylog-Server-URL https://\$server_name/;
+                    proxy_set_header X-Graylog-Server-URL http://\$server_name/;
                     proxy_pass       http://127.0.0.1:9000;
         }
 }
@@ -128,24 +92,27 @@ EOF
     systemctl restart nginx
     systemctl enable nginx
 }
-
 # Gọi các hàm cài đặt
 install_mongod
 install_opensearch
 install_graylog
 install_nginx
 ufw allow 80
-ufw allow 443
 ufw allow 9000
 ufw allow 9200
 passwd_first=$(cat /var/log/graylog-server/server.log | grep "with username 'admin' and password" | sed "s/.*password '\(.*\)'.*/\1/")
-echo "link graylog: https://$hostname"
-if [ -z "$passwd_first" ]; then
-    echo "Password first login not found"
-else
-    echo "password first login: $passwd_first"
-fi
-echo "user-graylog: admin"
-echo "password-graylog: $password_graylog"
-echo "user opensearch : admin"
-echo "passwd opensearch: $password_opensearch"
+
+{
+    echo "link graylog: http://$IP"
+    
+    if [ -z "$passwd_first" ]; then
+        echo "Password first login not found"
+    else
+        echo "password first login: $passwd_first"
+    fi
+
+    echo "user-graylog: admin"
+    echo "password-graylog: $password_graylog"
+    echo "user opensearch : admin"
+    echo "passwd opensearch: Minhlaquang99"
+} | tee thongtin.txt
