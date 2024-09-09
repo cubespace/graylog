@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # Nhập hostname và password từ người dùng
+read -p "Enter DNS name: " hostname
+echo 
 read -s -p "Enter password graylog: " password_graylog
 echo
 IP=$(hostname -I | awk '{print $1}')
