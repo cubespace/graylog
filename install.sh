@@ -53,7 +53,7 @@ function install_opensearch {
 function install_graylog {
     wget https://packages.graylog2.org/repo/packages/graylog-6.0-repository_latest.deb
     sudo dpkg -i graylog-6.0-repository_latest.deb
-    sudo apt-get update && sudo apt-get install graylog-server
+    sudo apt-get update && sudo apt-get install graylog-server=6.0.5-1
     apt-mark hold graylog-server
     # Thay thế giá trị trong file cấu hình
     sed -i "s|password_secret *=.*|password_secret = $password_secret|" $config_file
